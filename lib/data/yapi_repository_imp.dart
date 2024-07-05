@@ -1,10 +1,11 @@
-import 'package:yapi_model/data/api_provider.dart';
-import 'package:yapi_model/data/base_response.dart';
-import 'package:yapi_model/data/group.dart';
-import 'package:yapi_model/data/interface_info.dart';
-import 'package:yapi_model/data/project.dart';
-import 'package:yapi_model/data/typedefs.dart';
-import 'package:yapi_model/data/yapi_repository.dart';
+import 'package:yapi_model/domain/group.dart';
+import 'package:yapi_model/domain/interface_info.dart';
+import 'package:yapi_model/domain/project_info.dart';
+
+import 'api_provider.dart';
+import 'base_response.dart';
+import 'typedefs.dart';
+import 'yapi_repository.dart';
 
 class YapiRepositoryImp implements YapiRepository {
   final ApiProvider _apiProvider;
@@ -34,10 +35,10 @@ class YapiRepositoryImp implements YapiRepository {
   }
 
   @override
-  Future<BaseResponse<Project>> getProject() {
+  Future<BaseResponse<ProjectInfo>> getProject() {
     return _apiProvider.get(
       path: "/api/project/get",
-      dataConverter: (data) => Project.fromJson(data as JSON),
+      dataConverter: (data) => ProjectInfo.fromJson(data as JSON),
     );
   }
 }

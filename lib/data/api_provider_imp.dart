@@ -13,8 +13,15 @@ class ApiProviderImp implements ApiProvider {
   Future<BaseResponse<T>> get<T>(
       {required String path,
       JSON? queryParameters,
+      Options? options,
       required T Function(Object data) dataConverter}) {
-    return _dioClient.get(path, queryParameters: queryParameters).then(
+    return _dioClient
+        .get(
+          path,
+          queryParameters: queryParameters,
+          options: options,
+        )
+        .then(
           (response) => BaseResponse.fromJson(
             response.data,
             (data) => dataConverter(response.data["data"] as Object),
