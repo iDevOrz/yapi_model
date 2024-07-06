@@ -12,7 +12,7 @@ import 'package:yapi_model/yapi_model_app.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const YapiModelApp());
+    await tester.pumpWidget(YapiModelApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

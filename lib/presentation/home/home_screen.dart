@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yapi_model/common/widgets/async_value_widget.dart';
 import 'package:yapi_model/data/yapi_repository.dart';
-import 'package:yapi_model/presentation/home_controller.dart';
-import 'package:yapi_model/presentation/home_project_item_view.dart';
-import 'package:yapi_model/presentation/project_add_bottom_sheet.dart';
+import 'package:yapi_model/presentation/home/home_controller.dart';
+import 'package:yapi_model/presentation/home/home_project_item_view.dart';
+import 'package:yapi_model/presentation/project/project_add_bottom_sheet.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({

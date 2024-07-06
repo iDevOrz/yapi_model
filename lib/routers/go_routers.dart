@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yapi_model/presentation/home_screen.dart';
-import 'package:yapi_model/presentation/interface_screen.dart';
-import 'package:yapi_model/presentation/project_screen.dart';
+import 'package:yapi_model/presentation/home/home_screen.dart';
+import 'package:yapi_model/presentation/interface/interface_screen.dart';
+import 'package:yapi_model/presentation/project/project_screen.dart';
 
 part 'go_routers.g.dart';
 

@@ -6,38 +6,36 @@ part 'interface_info.g.dart';
 @freezed
 class InterfaceInfo with _$InterfaceInfo {
   const factory InterfaceInfo({
-    QueryPath? queryPath,
-    int? editUid,
+    @JsonKey(name: 'query_path') QueryPath? queryPath,
+    @JsonKey(name: 'edit_uid') int? editUid,
     String? status,
     String? type,
-    bool? reqBodyIsJsonSchema,
-    bool? resBodyIsJsonSchema,
-    bool? apiOpened,
+    @JsonKey(name: 'req_body_is_json_schema') bool? reqBodyIsJsonSchema,
+    @JsonKey(name: 'res_body_is_json_schema') bool? resBodyIsJsonSchema,
+    @JsonKey(name: 'api_opened') bool? apiOpened,
     int? index,
-    @JsonKey(name: "_id") int? id,
+    @JsonKey(name: '_id') required int id,
     String? method,
     int? catid,
     required String title,
-
-    /// 接口路径
     required String path,
-    int? projectId,
-    String? resBodyType,
+    @JsonKey(name: 'project_id') required int projectId,
+    @JsonKey(name: 'res_body_type') String? resBodyType,
     int? uid,
-    int? addTime,
-    int? upTime,
-    List<ReqQuery>? reqQuery,
-    List<ReqHeaders>? reqHeaders,
-    int? v,
+    @JsonKey(name: 'add_time') int? addTime,
+    @JsonKey(name: 'up_time') int? upTime,
+    @JsonKey(name: 'req_query') List<ReqQuery>? reqQuery,
+    @JsonKey(name: 'req_headers') List<ReqHeaders>? reqHeaders,
+    @JsonKey(name: '__v') int? v,
     String? desc,
     String? markdown,
 
-    /// 描述入参 Body 的Json String,可反序列化为 [ReqBodyOther]
-    String? reqBodyOther,
-    String? reqBodyType,
+    /// 描述入参 Body 的Json String,可反序列化为 [Body]
+    @JsonKey(name: 'req_body_other') String? reqBodyOther,
+    @JsonKey(name: 'req_body_type') String? reqBodyType,
 
-    /// 描述返回值 Body 的Json String,可反序列化为 [ReqBodyOther]
-    String? resBody,
+    /// 描述返回值 Body 的Json String,可反序列化为 [Body]
+    @JsonKey(name: 'res_body') String? resBody,
     String? username,
   }) = _InterfaceInfo;
 
@@ -59,8 +57,8 @@ class QueryPath with _$QueryPath {
 @freezed
 class ReqQuery with _$ReqQuery {
   const factory ReqQuery({
-    String? requiredProperty,
-    String? id,
+    @JsonKey(name: 'required') String? required,
+    @JsonKey(name: '_id') required String id,
 
     /// QueryName
     String? name,
@@ -79,7 +77,7 @@ class ReqQuery with _$ReqQuery {
 @freezed
 class ReqHeaders with _$ReqHeaders {
   const factory ReqHeaders({
-    String? requiredProperty,
+    String? required,
     String? id,
 
     /// Header Key
@@ -109,8 +107,18 @@ class Body with _$Body {
     /// Key：字段名；Value：字段对应的数据结构
     Map<String, Body>? properties,
 
+    /// 当 Type 为 array 时有值；
+    /// 描述数组 element 类型
+    Body? items,
+
     /// 必填字段
-    List<String>? requiredProperty,
+    List<String>? required,
+
+    /// 字段名
+    @Default("") String title,
+
+    /// 字段备注
+    @Default("") description,
   }) = _Body;
 
   factory Body.fromJson(Map<String, Object?> json) => _$BodyFromJson(json);

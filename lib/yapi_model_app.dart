@@ -5,7 +5,11 @@ import 'package:go_router/go_router.dart';
 import 'routers/go_routers.dart';
 
 class YapiModelApp extends StatelessWidget {
-  const YapiModelApp({super.key});
+  YapiModelApp({super.key});
+
+  final _routerConfig = GoRouter(
+    routes: $appRoutes,
+  );
 
   // This widget is the root of your application.
   @override
@@ -17,9 +21,8 @@ class YapiModelApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        routerConfig: GoRouter(
-          routes: $appRoutes,
-        ), //const HomePage(title: 'YapiModel Home Page'),
+        routerConfig:
+            _routerConfig, //const HomePage(title: 'YapiModel Home Page'),
       ),
     );
   }
