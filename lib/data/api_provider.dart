@@ -8,6 +8,8 @@ import 'package:yapi_model/data/typedefs.dart';
 part 'api_provider.g.dart';
 
 abstract class ApiProvider {
+  String get baseUrl;
+
   Future<BaseResponse<T>> get<T>({
     required String path,
     JSON? queryParameters,

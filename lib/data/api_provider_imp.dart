@@ -10,6 +10,9 @@ class ApiProviderImp implements ApiProvider {
   ApiProviderImp({required Dio dioClient}) : _dioClient = dioClient;
 
   @override
+  String get baseUrl => _dioClient.options.baseUrl;
+
+  @override
   Future<BaseResponse<T>> get<T>(
       {required String path,
       JSON? queryParameters,

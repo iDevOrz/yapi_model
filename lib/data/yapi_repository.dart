@@ -11,6 +11,8 @@ import '../domain/group.dart';
 part 'yapi_repository.g.dart';
 
 abstract class YapiRepository {
+  String get baseUrl;
+
   ///获取项目基本信息
   Future<BaseResponse<ProjectInfo>> getProject();
 

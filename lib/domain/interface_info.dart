@@ -118,7 +118,7 @@ class Body with _$Body {
     @Default("") String title,
 
     /// 字段备注
-    @Default("") description,
+    @Default("") String description,
   }) = _Body;
 
   factory Body.fromJson(Map<String, Object?> json) => _$BodyFromJson(json);

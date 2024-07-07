@@ -14,6 +14,9 @@ class YapiRepositoryImp implements YapiRepository {
       : _apiProvider = apiProvider;
 
   @override
+  String get baseUrl => _apiProvider.baseUrl;
+
+  @override
   Future<BaseResponse<InterfaceInfo>> getInterfaceInfo({required int id}) {
     return _apiProvider.get(
       path: "/api/interface/get",

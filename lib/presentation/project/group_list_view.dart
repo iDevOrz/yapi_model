@@ -16,13 +16,16 @@ class GroupListView extends ConsumerWidget {
         ref.watch(groupSearchResultListProvider(projectId: projectId));
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
-          child: SearchBar(
-            padding: const WidgetStatePropertyAll(EdgeInsets.all(8)),
-            constraints: const BoxConstraints(minHeight: 40),
-            onChanged: (value) {
-              ref.watch(groupListSearchProvider.notifier).state = value;
-            },
+        SliverPadding(
+          padding: const EdgeInsets.all(12),
+          sliver: SliverToBoxAdapter(
+            child: SearchBar(
+              padding: const WidgetStatePropertyAll(EdgeInsets.all(8)),
+              constraints: const BoxConstraints(minHeight: 40),
+              onChanged: (value) {
+                ref.watch(groupListSearchProvider.notifier).state = value;
+              },
+            ),
           ),
         ),
         AsyncValueSliverWidget(

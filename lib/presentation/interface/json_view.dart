@@ -7,13 +7,13 @@ import 'code_view.dart';
 class JsonView extends StatelessWidget {
   const JsonView({super.key, required this.json});
 
-  final String json;
+  final Object json;
 
   @override
   Widget build(BuildContext context) {
     //https://stackoverflow.com/questions/59428776/how-to-format-json-string-in-logcat-when-using-flutter-print-statement
     return CodeView(
-      code: const JsonEncoder.withIndent("  ").convert(jsonDecode(json)),
+      code: const JsonEncoder.withIndent("  ").convert(json),
       language: CodeLanguage.json,
     );
   }
