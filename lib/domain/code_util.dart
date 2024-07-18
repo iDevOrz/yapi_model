@@ -35,7 +35,6 @@ class CodeUtil {
                 ..factory = true
                 ..constant = true
                 ..redirect = refer("_$name");
-
               if (body.properties != null) {
                 for (final propertyMap in body.properties!.entries) {
                   final propertyName = propertyMap.key;
@@ -67,19 +66,13 @@ class CodeUtil {
                       }
 
                       constructorBuilder.addParameter(
-                        name: propertyName.toCapitalize(),
+                        name: propertyName,
                         type: "List<$elementType>",
                         required:
                             body.required?.contains(propertyName) ?? false,
                         title: propertyInfo.title,
                         description: propertyInfo.description,
                       );
-
-                    // dartClass.fields.add(Field((f) => f
-                    //   ..type = Reference("List<$elementType>")
-                    //   ..name = propertyName.toCapitalize()
-                    //   ..docs.add("///${propertyInfo.title}")
-                    //   ..docs.add("///${propertyInfo.description}")));
                     case DataType.object:
                       final className =
                           "${name.toCapitalize()}${propertyName.toCapitalize()}";
@@ -98,65 +91,36 @@ class CodeUtil {
                         title: propertyInfo.title,
                         description: propertyInfo.description,
                       );
-
-                    // dartClass.fields.add(Field((f) => f
-                    //   ..type = Reference(className)
-                    //   ..name = propertyName
-                    //   ..docs.add("///${propertyInfo.title}")
-                    //   ..docs.add("///${propertyInfo.description}")));
                   }
                 }
               }
-            }));
-
-          // if (body.properties != null) {
-          //   for (final propertyMap in body.properties!.entries) {
-          //     final propertyName = propertyMap.key;
-          //     final propertyInfo = propertyMap.value;
-          //     switch (propertyInfo.type) {
-          //       case DataType.string:
-          //       case DataType.number:
-          //       case DataType.boolean:
-          //       case DataType.integer:
-          //         dartClass.fields.add(Field((f) => f
-          //           ..type = Reference(_typeMap[propertyInfo.type])
-          //           ..name = propertyName
-          //           ..docs.add("///${propertyInfo.title}")
-          //           ..docs.add("///${propertyInfo.description}")));
-          //       case DataType.array:
-          //         final isObject = propertyInfo.items!.type == DataType.object;
-          //         final elementType = isObject
-          //             ? propertyName.toCapitalize()
-          //             : propertyInfo.items!.type.name;
-          //         if (isObject) {
-          //           result.addAll(genFormBody(propertyInfo.items!,
-          //               className: propertyName.toCapitalize()));
-          //         }
-          //         dartClass.fields.add(Field((f) => f
-          //           ..type = Reference("List<$elementType>")
-          //           ..name = propertyName.toCapitalize()
-          //           ..docs.add("///${propertyInfo.title}")
-          //           ..docs.add("///${propertyInfo.description}")));
-          //       case DataType.object:
-          //         final className =
-          //             "${name.toCapitalize()}${propertyName.toCapitalize()}";
-          //         result
-          //             .addAll(genFormBody(propertyInfo, className: className));
-          //         dartClass.fields.add(Field((f) => f
-          //           ..type = Reference(className)
-          //           ..name = propertyName
-          //           ..docs.add("///${propertyInfo.title}")
-          //           ..docs.add("///${propertyInfo.description}")));
-          //     }
-          //   }
-          // }
+            }))
+            ..constructors.add(_buildJsonFactory(className: name));
         },
       );
+
       result.insert(0, classInfo);
       return result;
     } else {
       return [];
     }
+  }
+
+  static Constructor _buildJsonFactory({required String className}) {
+    return Constructor(
+      (formJsonFactoryBuilder) => formJsonFactoryBuilder
+        ..factory = true
+        ..name = "fromJson"
+        ..requiredParameters.add(Parameter(
+          (parameterBuilder) {
+            parameterBuilder
+              ..name = "json"
+              ..type = refer("Map<String, Object?>");
+          },
+        ))
+        ..lambda = true
+        ..body = Code("_\$${className}FromJson(json)"),
+    );
   }
 }
 
@@ -183,7 +147,7 @@ extension ConstructorBuilderAdd on ConstructorBuilder {
           ..name = name
           ..named = true
           ..required = required
-          ..type = refer(type);
+          ..type = refer("$type${required ? "" : "?"}");
       },
     );
     optionalParameters.add(parameter);

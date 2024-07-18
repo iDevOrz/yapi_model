@@ -28,9 +28,19 @@ class InterfaceSplitView extends StatelessWidget {
               SizedBox(
                   width: 500, child: SingleChildScrollView(child: infoContent)),
               const SizedBox(width: 10),
-              Expanded(child: mockJsonContent),
+              Expanded(
+                  child: SizedBox.expand(
+                child: SingleChildScrollView(
+                  child: mockJsonContent,
+                ),
+              )),
               const SizedBox(width: 10),
-              Expanded(child: modelContent),
+              Expanded(
+                  child: SizedBox.expand(
+                child: SingleChildScrollView(
+                  child: modelContent,
+                ),
+              )),
             ],
           );
         } else {
