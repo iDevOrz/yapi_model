@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'project_config.freezed.dart';
+part 'project_config.g.dart';
 
 @freezed
 class ProjectConfig with _$ProjectConfig {
@@ -9,4 +10,7 @@ class ProjectConfig with _$ProjectConfig {
       required String token,
       required String name,
       required int id}) = _ProjectConfig;
+
+  factory ProjectConfig.fromJson(Map<String, dynamic> json) =>
+      _$ProjectConfigFromJson(json);
 }

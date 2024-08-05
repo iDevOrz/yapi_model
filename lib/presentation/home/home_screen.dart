@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yapi_model/common/widgets/async_value_widget.dart';
-import 'package:yapi_model/data/yapi_repository.dart';
 import 'package:yapi_model/presentation/home/home_controller.dart';
 import 'package:yapi_model/presentation/home/home_project_item_view.dart';
 import 'package:yapi_model/presentation/project/project_add_dialog.dart';
@@ -16,16 +15,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  final _resultController = ValueNotifier<Future?>(null);
-
-  YapiRepository get _repository => ref.read(yapiRepositoryProvider);
-
-  @override
-  void dispose() {
-    _resultController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +29,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           itemCount: value.length,
           itemBuilder: (ct, index) => HomeProjectItemView(
             data: value[index],
+            onDeletePressed: () =>
+                ref.read(homeControllerProvider.notifier).delete(value[index]),
           ),
         ),
       ),

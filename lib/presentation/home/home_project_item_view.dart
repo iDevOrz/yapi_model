@@ -3,9 +3,12 @@ import 'package:yapi_model/domain/project_config.dart';
 import 'package:yapi_model/routers/go_routers.dart';
 
 class HomeProjectItemView extends StatelessWidget {
-  const HomeProjectItemView({super.key, required this.data});
+  const HomeProjectItemView(
+      {super.key, required this.data, this.onDeletePressed});
 
   final ProjectConfig data;
+
+  final VoidCallback? onDeletePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,17 @@ class HomeProjectItemView extends StatelessWidget {
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(data.name ?? "unknown"),
+          child: Row(
+            children: [
+              Expanded(child: Text(data.name ?? "unknown")),
+              IconButton(
+                  onPressed: onDeletePressed,
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ))
+            ],
+          ),
         ),
       ),
     );
