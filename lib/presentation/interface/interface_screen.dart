@@ -18,7 +18,7 @@ class InterfaceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("信息信息"),
+        title: const Text("接口信息"),
       ),
       body: Consumer(
         builder: (context, ref, child) {

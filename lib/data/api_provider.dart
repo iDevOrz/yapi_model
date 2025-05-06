@@ -30,10 +30,7 @@ ApiProvider apiProvider(
 }) {
   return ApiProviderImp(
     dioClient: ref.watch(
-      dioProvider(
-        baseUrl: baseUrl,
-        token: token,
-      ),
+      dioProvider(baseUrl: baseUrl, token: token),
     ),
   );
 }

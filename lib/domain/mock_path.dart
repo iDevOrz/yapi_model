@@ -22,7 +22,7 @@ class MockPath {
 MockPath mockPath(MockPathRef ref, {required InterfaceInfo interface}) {
   final baseUrl = ref.watch(yapiRepositoryProvider).baseUrl;
   return MockPath(
-    baseUrl: "$baseUrl/mock/${interface.projectId}",
+    baseUrl: "${baseUrl}mock/${interface.projectId}",
     path: interface.path,
     method: interface.method!,
   );

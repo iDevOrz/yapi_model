@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart' show DiagnosticPropertiesBuilder;
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/rendering.dart' show DiagnosticsProperty;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Consumer;
+import 'package:yapi_model/common/extension/date_convert_extension.dart';
 import 'package:yapi_model/domain/interface_info.dart';
 import 'package:yapi_model/domain/mock_path.dart';
 
@@ -15,19 +18,50 @@ class InterfaceInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 12,
+        children: [
+          _buildBasicView(context),
+          _buildReqHeadersView(context),
+          _buildResponseView(context)
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeadline(BuildContext context, {required String header}) {
+    return Text(header, style: Theme.of(context).textTheme.headlineMedium);
+  }
+
+  Widget _buildSectionViewWrap({required List<Widget> children}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 6,
+      children: children,
+    );
+  }
+
+  /// 基本信息
+  Widget _buildBasicView(BuildContext context) {
+    return _buildSectionViewWrap(
       children: [
         _buildHeadline(context, header: "基本信息"),
         Row(
           children: [
             Container(
               padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(color: Colors.green[200]),
-              child: Text(info.method.toString()),
+              decoration: BoxDecoration(
+                color: Colors.green[200],
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(info.method ?? "Unknown"),
             ),
-            const SizedBox(width: 2),
+            const SizedBox(width: 4),
             Flexible(child: Text(info.path))
           ],
         ),
@@ -44,15 +78,25 @@ class InterfaceInfoView extends StatelessWidget {
           style: TextStyle(color: Colors.blue[300]),
         ),
         Text(
-          "更新时间：${info.upTime}",
+          "更新时间：${info.upTime?.format ?? "UnKnown"}",
           style: TextStyle(color: Colors.blue[300]),
         ),
         Consumer(
           builder: (context, ref, child) {
             final mockPath = ref.watch(mockPathProvider(interface: info));
-            return Text(mockPath.fullPath);
+            return Text(
+              "Mock path:${mockPath.fullPath}",
+              style: TextStyle(color: Colors.blue[300]),
+            );
           },
-        ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildReqHeadersView(BuildContext context) {
+    return _buildSectionViewWrap(
+      children: [
         _buildHeadline(context, header: "请求参数"),
         TableView<ReqHeaders>(
             header: "Header",
@@ -77,6 +121,24 @@ class InterfaceInfoView extends StatelessWidget {
             header: 'Body',
             body: Body.fromJson(jsonDecode(info.reqBodyOther!)),
           ),
+      ],
+    );
+  }
+
+  /// Waiting Dart 3.8 release
+  // Widget? _buildRequestBodyView(BuildContext context) {
+  //   if (info.reqBodyOther != null) {
+  //     return BodyTreeView(
+  //       header: 'Body',
+  //       body: Body.fromJson(jsonDecode(info.reqBodyOther!)),
+  //     );
+  //   }
+  //   return null;
+  // }
+
+  Widget _buildResponseView(BuildContext context) {
+    return _buildSectionViewWrap(
+      children: [
         _buildHeadline(context, header: "返回数据"),
         if (info.resBody != null)
           BodyTreeView(
@@ -87,7 +149,9 @@ class InterfaceInfoView extends StatelessWidget {
     );
   }
 
-  Widget _buildHeadline(BuildContext context, {required String header}) {
-    return Text(header, style: Theme.of(context).textTheme.headlineMedium);
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<InterfaceInfo>('info', info));
   }
 }
