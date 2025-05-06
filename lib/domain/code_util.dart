@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:yapi_model/domain/interface_info.dart';
 
 class CodeUtil {
@@ -9,7 +10,8 @@ class CodeUtil {
     DataType.string: "String",
     DataType.number: "num",
     DataType.boolean: "bool",
-    DataType.integer: "int"
+    DataType.integer: "int",
+    DataType.nullType: "null"
   };
 
   static List<Class> gen(String bodyJsonString) {
@@ -91,6 +93,8 @@ class CodeUtil {
                         title: propertyInfo.title,
                         description: propertyInfo.description,
                       );
+                    case DataType.nullType:
+                      debugPrint("DataType.null $propertyInfo");
                   }
                 }
               }

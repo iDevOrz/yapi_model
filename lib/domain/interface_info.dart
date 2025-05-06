@@ -131,4 +131,6 @@ enum DataType {
   object,
   boolean,
   integer,
+  @JsonValue("null")
+  nullType,
 }
