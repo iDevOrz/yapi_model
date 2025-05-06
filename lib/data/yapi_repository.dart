@@ -26,7 +26,7 @@ abstract class YapiRepository {
 }
 
 @riverpod
-YapiRepository yapiRepository(YapiRepositoryRef ref) {
+YapiRepository yapiRepository(Ref ref) {
   final baseUrl = ref.watch(baseUrlProvider);
   final token = ref.watch(tokenProvider);
   final apiProvider = ref.watch(

@@ -31,19 +31,20 @@ class ModelView extends StatelessWidget {
           bottom: 0,
           child: ElevatedButton(
               style: ElevatedButton.styleFrom(shape: const CircleBorder()),
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: dartCode)).then((_) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("Code copied to clipboard")));
-                });
-              },
-              child: CircleAvatar(
-                child: Icon(
-                  Icons.copy,
-                ),
+              onPressed: () => _onCopyTap(context, text: dartCode),
+              child: const CircleAvatar(
+                child: Icon(Icons.copy),
               )),
         )
       ],
     );
+  }
+
+  Future<void> _onCopyTap(BuildContext context, {required String text}) async {
+    await Clipboard.setData(ClipboardData(text: text));
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Code copied to clipboard")));
+    }
   }
 }

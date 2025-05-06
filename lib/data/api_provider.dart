@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yapi_model/data/api_provider_imp.dart';
 import 'package:yapi_model/data/base_response.dart';
@@ -18,13 +19,13 @@ abstract class ApiProvider {
   });
 }
 
-const _baseUrl = String.fromEnvironment("baseUrl");
-
-const _token = String.fromEnvironment("token");
+// const _baseUrl = String.fromEnvironment("baseUrl");
+//
+// const _token = String.fromEnvironment("token");
 
 @riverpod
 ApiProvider apiProvider(
-  ApiProviderRef ref, {
+  Ref ref, {
   required String baseUrl,
   required String token,
 }) {

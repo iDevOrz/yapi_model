@@ -51,6 +51,9 @@ dependencies:
   built_collection: ^5.1.1
   intl:
   shared_preferences: ^2.5.3
+  dart_style: ^2.3.8
+  collection: ^1.19.1
+  flutter_highlight: ^0.7.0
 
 dev_dependencies:
   flutter_test:

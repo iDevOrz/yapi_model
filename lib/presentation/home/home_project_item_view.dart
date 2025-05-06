@@ -21,7 +21,7 @@ class HomeProjectItemView extends ConsumerWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              Expanded(child: Text(data.name ?? "unknown")),
+              Expanded(child: Text(data.name)),
               IconButton(
                   onPressed: onDeletePressed,
                   icon: const Icon(

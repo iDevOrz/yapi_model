@@ -25,21 +25,6 @@ class GroupListItemView extends StatelessWidget {
         );
       },
     );
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(data.name.toString()),
-            const SizedBox(height: 6),
-            Text(data.list.length.toString()),
-          ],
-        ),
-      ),
-    );
   }
 
   Widget _buildInterface(BuildContext context, {required Interface interface}) {

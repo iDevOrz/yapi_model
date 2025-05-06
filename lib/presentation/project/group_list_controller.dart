@@ -6,11 +6,11 @@ import 'package:yapi_model/domain/group.dart';
 part 'group_list_controller.g.dart';
 
 @riverpod
-Future<List<Group>> groupList(GroupListRef ref, {required int projectId}) {
+Future<List<Group>> groupList(Ref ref, {required int projectId}) {
   return ref
       .read(yapiRepositoryProvider)
       .getListMenu(projectId: projectId)
-      .then((value) => value.data ?? []);
+      .then((value) => value.data);
 }
 
 final groupListSearchProvider = StateProvider.autoDispose<String>((ref) {
@@ -18,7 +18,7 @@ final groupListSearchProvider = StateProvider.autoDispose<String>((ref) {
 });
 
 @riverpod
-Future<List<Group>> groupSearchResultList(GroupSearchResultListRef ref,
+Future<List<Group>> groupSearchResultList(Ref ref,
     {required int projectId}) async {
   final allData =
       await ref.watch(groupListProvider(projectId: projectId).future);
