@@ -6,13 +6,12 @@ import 'package:yapi_model/presentation/project/project_screen.dart';
 
 part 'go_routers.g.dart';
 
-@TypedGoRoute<HomeScreenRoute>(path: '/', routes: [
-  TypedGoRoute<ProjectScreenRoute>(
-    path: 'project/:id',
-  )
-])
+@TypedGoRoute<HomeScreenRoute>(
+  path: '/',
+  routes: [TypedGoRoute<ProjectScreenRoute>(path: 'project/:id')],
+)
 @immutable
-class HomeScreenRoute extends GoRouteData {
+class HomeScreenRoute extends GoRouteData with $HomeScreenRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const HomeScreen();
@@ -21,7 +20,7 @@ class HomeScreenRoute extends GoRouteData {
 
 @TypedGoRoute<ProjectScreenRoute>(path: '/project/:id')
 @immutable
-class ProjectScreenRoute extends GoRouteData {
+class ProjectScreenRoute extends GoRouteData with $ProjectScreenRoute {
   final int id;
 
   const ProjectScreenRoute({required this.id});
@@ -34,7 +33,7 @@ class ProjectScreenRoute extends GoRouteData {
 
 @TypedGoRoute<InterfaceScreenRoute>(path: '/interface/:id')
 @immutable
-class InterfaceScreenRoute extends GoRouteData {
+class InterfaceScreenRoute extends GoRouteData with $InterfaceScreenRoute {
   final int id;
 
   const InterfaceScreenRoute({required this.id});

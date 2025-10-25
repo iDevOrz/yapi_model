@@ -4,7 +4,7 @@ part 'group.freezed.dart';
 part 'group.g.dart';
 
 @freezed
-class Group with _$Group {
+abstract class Group with _$Group {
   const factory Group({
     int? index,
     @JsonKey(name: "_id") required int id,
@@ -26,7 +26,7 @@ class Group with _$Group {
 }
 
 @freezed
-class Interface with _$Interface {
+abstract class Interface with _$Interface {
   const factory Interface({
     int? editUid,
     String? status,
@@ -62,8 +62,11 @@ extension GroupSearch on Iterable<Group> {
           return element;
         } else {
           final filteredInterface = element.list
-              .where((interface) => (interface.title.contains(search) ||
-                  interface.path.contains(search)))
+              .where(
+                (interface) =>
+                    (interface.title.contains(search) ||
+                    interface.path.contains(search)),
+              )
               .toList();
           if (filteredInterface.isNotEmpty) {
             return element.copyWith(list: filteredInterface);

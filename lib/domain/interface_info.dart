@@ -4,7 +4,7 @@ part 'interface_info.freezed.dart';
 part 'interface_info.g.dart';
 
 @freezed
-class InterfaceInfo with _$InterfaceInfo {
+abstract class InterfaceInfo with _$InterfaceInfo {
   const factory InterfaceInfo({
     @JsonKey(name: 'query_path') QueryPath? queryPath,
     @JsonKey(name: 'edit_uid') int? editUid,
@@ -44,7 +44,7 @@ class InterfaceInfo with _$InterfaceInfo {
 }
 
 @freezed
-class QueryPath with _$QueryPath {
+abstract class QueryPath with _$QueryPath {
   const factory QueryPath({
     /// 请求路径
     String? path,
@@ -55,7 +55,7 @@ class QueryPath with _$QueryPath {
 }
 
 @freezed
-class ReqQuery with _$ReqQuery {
+abstract class ReqQuery with _$ReqQuery {
   const factory ReqQuery({
     @JsonKey(name: 'required') String? required,
     @JsonKey(name: '_id') required String id,
@@ -75,7 +75,7 @@ class ReqQuery with _$ReqQuery {
 }
 
 @freezed
-class ReqHeaders with _$ReqHeaders {
+abstract class ReqHeaders with _$ReqHeaders {
   const factory ReqHeaders({
     String? required,
     String? id,
@@ -98,7 +98,7 @@ class ReqHeaders with _$ReqHeaders {
 }
 
 @freezed
-class Body with _$Body {
+abstract class Body with _$Body {
   const factory Body({
     /// 字段类型
     @Default(DataType.string) DataType type,

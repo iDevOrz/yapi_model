@@ -12,8 +12,9 @@ class GroupListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final groupList =
-        ref.watch(groupSearchResultListProvider(projectId: projectId));
+    final groupList = ref.watch(
+      groupSearchResultListProvider(projectId: projectId),
+    );
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -23,7 +24,7 @@ class GroupListView extends ConsumerWidget {
               padding: const WidgetStatePropertyAll(EdgeInsets.all(8)),
               constraints: const BoxConstraints(minHeight: 40),
               onChanged: (value) {
-                ref.watch(groupListSearchProvider.notifier).state = value;
+                ref.watch(groupListSearchProvider.notifier).searchText = value;
               },
             ),
           ),
@@ -32,9 +33,7 @@ class GroupListView extends ConsumerWidget {
           value: groupList,
           data: (value) => SliverList.builder(
             itemCount: value.length,
-            itemBuilder: (ct, index) => GroupListItemView(
-              data: value[index],
-            ),
+            itemBuilder: (ct, index) => GroupListItemView(data: value[index]),
           ),
           onErrorActionTap: () {
             ref.invalidate(groupListProvider(projectId: projectId));

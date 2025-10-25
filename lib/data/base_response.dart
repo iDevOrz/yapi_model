@@ -5,7 +5,7 @@ part 'base_response.g.dart';
 
 //https://pub.dev/packages/freezed#deserializing-generic-classes
 @Freezed(genericArgumentFactories: true)
-class BaseResponse<T> with _$BaseResponse<T> {
+abstract class BaseResponse<T> with _$BaseResponse<T> {
   const factory BaseResponse({
     required int errcode,
     required String errmsg,
@@ -13,6 +13,7 @@ class BaseResponse<T> with _$BaseResponse<T> {
   }) = _BaseResponse;
 
   factory BaseResponse.fromJson(
-          Map<String, dynamic> json, T Function(Object?) fromJsonT) =>
-      _$BaseResponseFromJson(json, fromJsonT);
+    Map<String, dynamic> json,
+    T Function(Object?) fromJsonT,
+  ) => _$BaseResponseFromJson(json, fromJsonT);
 }

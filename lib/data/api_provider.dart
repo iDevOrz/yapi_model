@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yapi_model/data/api_provider_imp.dart';
 import 'package:yapi_model/data/base_response.dart';
@@ -30,8 +29,6 @@ ApiProvider apiProvider(
   required String token,
 }) {
   return ApiProviderImp(
-    dioClient: ref.watch(
-      dioProvider(baseUrl: baseUrl, token: token),
-    ),
+    dioClient: ref.watch(dioProvider(baseUrl: baseUrl, token: token)),
   );
 }

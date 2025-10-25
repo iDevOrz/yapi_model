@@ -5,8 +5,11 @@ import 'package:yapi_model/domain/project_config.dart';
 import 'package:yapi_model/routers/go_routers.dart';
 
 class HomeProjectItemView extends ConsumerWidget {
-  const HomeProjectItemView(
-      {super.key, required this.data, this.onDeletePressed});
+  const HomeProjectItemView({
+    super.key,
+    required this.data,
+    this.onDeletePressed,
+  });
 
   final ProjectConfig data;
 
@@ -23,11 +26,9 @@ class HomeProjectItemView extends ConsumerWidget {
             children: [
               Expanded(child: Text(data.name)),
               IconButton(
-                  onPressed: onDeletePressed,
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ))
+                onPressed: onDeletePressed,
+                icon: const Icon(Icons.delete, color: Colors.red),
+              ),
             ],
           ),
         ),
@@ -36,8 +37,8 @@ class HomeProjectItemView extends ConsumerWidget {
   }
 
   Future<void> _onTap(WidgetRef ref) async {
-    ref.watch(baseUrlProvider.notifier).state = data.baseUrl;
-    ref.watch(tokenProvider.notifier).state = data.token;
+    ref.read(baseUrlProvider.notifier).url = data.baseUrl;
+    ref.read(tokenProvider.notifier).token = data.token;
     final result = await ref.read(yapiRepositoryProvider).getProject();
     if (ref.context.mounted) {
       ProjectScreenRoute(id: result.data.id).push(ref.context);

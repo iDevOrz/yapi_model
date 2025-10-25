@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yapi_model/data/yapi_repository.dart';
 import 'package:yapi_model/domain/interface_info.dart';

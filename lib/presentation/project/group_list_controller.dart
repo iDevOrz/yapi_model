@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yapi_model/data/yapi_repository.dart';
 import 'package:yapi_model/domain/group.dart';
@@ -13,15 +12,24 @@ Future<List<Group>> groupList(Ref ref, {required int projectId}) {
       .then((value) => value.data);
 }
 
-final groupListSearchProvider = StateProvider.autoDispose<String>((ref) {
-  return "";
-});
+@riverpod
+class GroupListSearch extends _$GroupListSearch {
+  @override
+  String build() {
+    return "";
+  }
+
+  set searchText(String text) => state = text;
+}
 
 @riverpod
-Future<List<Group>> groupSearchResultList(Ref ref,
-    {required int projectId}) async {
-  final allData =
-      await ref.watch(groupListProvider(projectId: projectId).future);
+Future<List<Group>> groupSearchResultList(
+  Ref ref, {
+  required int projectId,
+}) async {
+  final allData = await ref.watch(
+    groupListProvider(projectId: projectId).future,
+  );
   final searchText = ref.watch(groupListSearchProvider);
   if (searchText.isEmpty) {
     return allData;

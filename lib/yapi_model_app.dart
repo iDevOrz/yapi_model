@@ -7,14 +7,13 @@ import 'routers/go_routers.dart';
 class YapiModelApp extends StatelessWidget {
   YapiModelApp({super.key});
 
-  final _routerConfig = GoRouter(
-    routes: $appRoutes,
-  );
+  final _routerConfig = GoRouter(routes: $appRoutes);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
+      retry: (_, _) => null,
       child: MaterialApp.router(
         title: 'YapiModel',
         theme: ThemeData(

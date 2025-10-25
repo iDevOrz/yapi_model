@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yapi_model/data/api_provider.dart';
 import 'package:yapi_model/data/base_response.dart';
@@ -35,10 +34,18 @@ YapiRepository yapiRepository(Ref ref) {
   return YapiRepositoryImp(apiProvider: apiProvider);
 }
 
-final baseUrlProvider = StateProvider<String>((ref) {
-  return const String.fromEnvironment("baseUrl");
-});
+@Riverpod(keepAlive: true)
+class BaseUrl extends _$BaseUrl {
+  @override
+  String build() => String.fromEnvironment("baseUrl");
 
-final tokenProvider = StateProvider<String>((ref) {
-  return const String.fromEnvironment("token");
-});
+  set url(String url) => state = url;
+}
+
+@Riverpod(keepAlive: true)
+class Token extends _$Token {
+  @override
+  String build() => String.fromEnvironment("token");
+
+  set token(String token) => state = token;
+}
