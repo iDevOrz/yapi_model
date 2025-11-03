@@ -1,11 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:yapi_model/data/api_provider.dart';
-import 'package:yapi_model/data/base_response.dart';
+import 'package:yapi_model/common/network/api_provider.dart';
+import 'package:yapi_model/common/network/base_response.dart';
+import 'package:yapi_model/data/model/group.dart';
+import 'package:yapi_model/data/model/interface_info.dart';
+import 'package:yapi_model/data/model/project_info.dart';
 import 'package:yapi_model/data/yapi_repository_imp.dart';
-import 'package:yapi_model/domain/interface_info.dart';
-import 'package:yapi_model/domain/project_info.dart';
-
-import '../domain/group.dart';
 
 part 'yapi_repository.g.dart';
 

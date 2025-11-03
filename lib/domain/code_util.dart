@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:yapi_model/domain/interface_info.dart';
+import 'package:yapi_model/data/model/interface_info.dart';
 
 class CodeUtil {
   static const _typeMap = {
@@ -11,7 +11,7 @@ class CodeUtil {
     DataType.number: "num",
     DataType.boolean: "bool",
     DataType.integer: "int",
-    DataType.nullType: "null"
+    DataType.nullType: "null",
   };
 
   static List<Class> gen(String bodyJsonString) {
@@ -19,20 +19,24 @@ class CodeUtil {
     return genFormBody(body);
   }
 
-  static List<Class> genFormBody(Body body,
-      {String? className, String? title, String? description}) {
+  static List<Class> genFormBody(
+    Body body, {
+    String? className,
+    String? title,
+    String? description,
+  }) {
     final result = List<Class>.empty(growable: true);
 
     if (body.type == DataType.object) {
       final name = className ?? "RootClass";
-      final classInfo = Class(
-        (dartClass) {
-          dartClass
-            ..docs.addDoc([title, description])
-            ..annotations.add(refer("freezed"))
-            ..name = name
-            ..mixins.add(refer("_\$$name"))
-            ..constructors.add(Constructor((constructorBuilder) {
+      final classInfo = Class((dartClass) {
+        dartClass
+          ..docs.addDoc([title, description])
+          ..annotations.add(refer("freezed"))
+          ..name = name
+          ..mixins.add(refer("_\$$name"))
+          ..constructors.add(
+            Constructor((constructorBuilder) {
               constructorBuilder
                 ..factory = true
                 ..constant = true
@@ -61,10 +65,14 @@ class CodeUtil {
                           ? propertyName.toCapitalize()
                           : propertyInfo.items!.type.name;
                       if (isObject) {
-                        result.addAll(genFormBody(propertyInfo.items!,
+                        result.addAll(
+                          genFormBody(
+                            propertyInfo.items!,
                             className: propertyName.toCapitalize(),
                             title: propertyInfo.title,
-                            description: propertyInfo.description));
+                            description: propertyInfo.description,
+                          ),
+                        );
                       }
 
                       constructorBuilder.addParameter(
@@ -78,12 +86,14 @@ class CodeUtil {
                     case DataType.object:
                       final className =
                           "${name.toCapitalize()}${propertyName.toCapitalize()}";
-                      result.addAll(genFormBody(
-                        propertyInfo,
-                        className: className,
-                        title: propertyInfo.title,
-                        description: propertyInfo.description,
-                      ));
+                      result.addAll(
+                        genFormBody(
+                          propertyInfo,
+                          className: className,
+                          title: propertyInfo.title,
+                          description: propertyInfo.description,
+                        ),
+                      );
 
                       constructorBuilder.addParameter(
                         name: propertyName,
@@ -98,10 +108,10 @@ class CodeUtil {
                   }
                 }
               }
-            }))
-            ..constructors.add(_buildJsonFactory(className: name));
-        },
-      );
+            }),
+          )
+          ..constructors.add(_buildJsonFactory(className: name));
+      });
 
       result.insert(0, classInfo);
       return result;
@@ -115,13 +125,13 @@ class CodeUtil {
       (formJsonFactoryBuilder) => formJsonFactoryBuilder
         ..factory = true
         ..name = "fromJson"
-        ..requiredParameters.add(Parameter(
-          (parameterBuilder) {
+        ..requiredParameters.add(
+          Parameter((parameterBuilder) {
             parameterBuilder
               ..name = "json"
               ..type = refer("Map<String, Object?>");
-          },
-        ))
+          }),
+        )
         ..lambda = true
         ..body = Code("_\$${className}FromJson(json)"),
     );
@@ -138,31 +148,29 @@ extension StringExtension on String {
 }
 
 extension ConstructorBuilderAdd on ConstructorBuilder {
-  void addParameter(
-      {required String name,
-      required String type,
-      bool required = false,
-      String? title,
-      String? description}) {
-    final parameter = Parameter(
-      (parameterBuilder) {
-        parameterBuilder
-          ..docs.addDoc([title, description])
-          ..name = name
-          ..named = true
-          ..required = required
-          ..type = refer("$type${required ? "" : "?"}");
-      },
-    );
+  void addParameter({
+    required String name,
+    required String type,
+    bool required = false,
+    String? title,
+    String? description,
+  }) {
+    final parameter = Parameter((parameterBuilder) {
+      parameterBuilder
+        ..docs.addDoc([title, description])
+        ..name = name
+        ..named = true
+        ..required = required
+        ..type = refer("$type${required ? "" : "?"}");
+    });
     optionalParameters.add(parameter);
   }
 }
 
 extension DocAdd on ListBuilder<String> {
   void addDoc(List<String?> docs) {
-    addAll(docs
-        .whereType<String>()
-        .where((e) => e.isNotEmpty)
-        .map((e) => "/// $e"));
+    addAll(
+      docs.whereType<String>().where((e) => e.isNotEmpty).map((e) => "/// $e"),
+    );
   }
 }

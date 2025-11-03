@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show DiagnosticsProperty;
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Consumer;
 import 'package:yapi_model/common/extension/date_convert_extension.dart';
-import 'package:yapi_model/domain/interface_info.dart';
-import 'package:yapi_model/domain/mock_path.dart';
+import 'package:yapi_model/data/model/interface_info.dart';
+import 'package:yapi_model/data/model/mock_path.dart';
 
 import 'body_tree_view.dart';
 import 'table_view.dart';
@@ -27,7 +27,7 @@ class InterfaceInfoView extends StatelessWidget {
         children: [
           _buildBasicView(context),
           _buildReqHeadersView(context),
-          _buildResponseView(context)
+          _buildResponseView(context),
         ],
       ),
     );
@@ -62,21 +62,12 @@ class InterfaceInfoView extends StatelessWidget {
               child: Text(info.method ?? "Unknown"),
             ),
             const SizedBox(width: 4),
-            Flexible(child: Text(info.path))
+            Flexible(child: Text(info.path)),
           ],
         ),
-        Text(
-          "接口名称：${info.title}",
-          style: TextStyle(color: Colors.blue[300]),
-        ),
-        Text(
-          "创建人：${info.username}",
-          style: TextStyle(color: Colors.blue[300]),
-        ),
-        Text(
-          "状态：${info.status}",
-          style: TextStyle(color: Colors.blue[300]),
-        ),
+        Text("接口名称：${info.title}", style: TextStyle(color: Colors.blue[300])),
+        Text("创建人：${info.username}", style: TextStyle(color: Colors.blue[300])),
+        Text("状态：${info.status}", style: TextStyle(color: Colors.blue[300])),
         Text(
           "更新时间：${info.upTime?.format ?? "UnKnown"}",
           style: TextStyle(color: Colors.blue[300]),
@@ -89,7 +80,7 @@ class InterfaceInfoView extends StatelessWidget {
               style: TextStyle(color: Colors.blue[300]),
             );
           },
-        )
+        ),
       ],
     );
   }
@@ -99,42 +90,40 @@ class InterfaceInfoView extends StatelessWidget {
       children: [
         _buildHeadline(context, header: "请求参数"),
         TableView<ReqHeaders>(
-            header: "Header",
-            dataSource: info.reqHeaders ?? [],
-            rowBuilders: [
-              ("参数名称", (ReqHeaders header) => header.name ?? ""),
-              ("参数值", (ReqHeaders header) => header.value ?? ""),
-              ("是否必须", (ReqHeaders header) => header.required ?? ""),
-              ("示例", (ReqHeaders header) => header.example ?? "")
-            ]),
+          header: "Header",
+          dataSource: info.reqHeaders ?? [],
+          rowBuilders: [
+            ("参数名称", (ReqHeaders header) => header.name ?? ""),
+            ("参数值", (ReqHeaders header) => header.value ?? ""),
+            ("是否必须", (ReqHeaders header) => header.required ?? ""),
+            ("示例", (ReqHeaders header) => header.example ?? ""),
+          ],
+        ),
         TableView<ReqQuery>(
-            header: "Query",
-            dataSource: info.reqQuery ?? [],
-            rowBuilders: [
-              ("参数名称", (ReqQuery query) => query.name ?? ""),
-              ("是否必须", (ReqQuery query) => query.required ?? ""),
-              ("示例", (ReqQuery query) => query.example ?? ""),
-              ("备注", (ReqQuery query) => query.desc ?? ""),
-            ]),
-        if (info.reqBodyOther != null)
-          BodyTreeView(
-            header: 'Body',
-            body: Body.fromJson(jsonDecode(info.reqBodyOther!)),
-          ),
+          header: "Query",
+          dataSource: info.reqQuery ?? [],
+          rowBuilders: [
+            ("参数名称", (ReqQuery query) => query.name ?? ""),
+            ("是否必须", (ReqQuery query) => query.required ?? ""),
+            ("示例", (ReqQuery query) => query.example ?? ""),
+            ("备注", (ReqQuery query) => query.desc ?? ""),
+          ],
+        ),
+        ?_buildRequestBodyView(context),
       ],
     );
   }
 
   /// Waiting Dart 3.8 release
-  // Widget? _buildRequestBodyView(BuildContext context) {
-  //   if (info.reqBodyOther != null) {
-  //     return BodyTreeView(
-  //       header: 'Body',
-  //       body: Body.fromJson(jsonDecode(info.reqBodyOther!)),
-  //     );
-  //   }
-  //   return null;
-  // }
+  Widget? _buildRequestBodyView(BuildContext context) {
+    if (info.reqBodyOther != null) {
+      return BodyTreeView(
+        header: 'Body',
+        body: Body.fromJson(jsonDecode(info.reqBodyOther!)),
+      );
+    }
+    return null;
+  }
 
   Widget _buildResponseView(BuildContext context) {
     return _buildSectionViewWrap(
@@ -144,7 +133,7 @@ class InterfaceInfoView extends StatelessWidget {
           BodyTreeView(
             header: '返回值',
             body: Body.fromJson(jsonDecode(info.resBody!)),
-          )
+          ),
       ],
     );
   }

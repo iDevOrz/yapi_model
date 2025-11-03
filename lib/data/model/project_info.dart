@@ -21,7 +21,7 @@ abstract class ProjectInfo with _$ProjectInfo {
     int? addTime,
     int? upTime,
     List<ProjectTag>? tag,
-    bool? role,
+    String? role,
   }) = _ProjectInfo;
 
   factory ProjectInfo.fromJson(Map<String, dynamic> json) =>

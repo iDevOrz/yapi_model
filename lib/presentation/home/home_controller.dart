@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yapi_model/data/model/project_config.dart';
 import 'package:yapi_model/data/yapi_repository.dart';
-import 'package:yapi_model/domain/project_config.dart';
 
 part 'home_controller.g.dart';
 

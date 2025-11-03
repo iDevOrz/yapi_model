@@ -22,7 +22,7 @@ class ModelView extends StatelessWidget {
     return Stack(
       children: [
         Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text("Model", style: Theme.of(context).textTheme.headlineMedium),

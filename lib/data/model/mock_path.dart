@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:yapi_model/data/model/interface_info.dart';
 import 'package:yapi_model/data/yapi_repository.dart';
-import 'package:yapi_model/domain/interface_info.dart';
 
 part 'mock_path.g.dart';
 
@@ -22,7 +22,7 @@ class MockPath {
 MockPath mockPath(Ref ref, {required InterfaceInfo interface}) {
   final baseUrl = ref.watch(yapiRepositoryProvider).baseUrl;
   return MockPath(
-    baseUrl: "${baseUrl}mock/${interface.projectId}",
+    baseUrl: "$baseUrl/mock/${interface.projectId}",
     path: interface.path,
     method: interface.method!,
   );

@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:yapi_model/data/model/interface_info.dart';
 import 'package:yapi_model/data/yapi_repository.dart';
-import 'package:yapi_model/domain/interface_info.dart';
 
 part 'interface_controller.g.dart';
 

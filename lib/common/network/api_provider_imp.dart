@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:yapi_model/data/base_response.dart';
 
 import 'api_provider.dart';
+import 'base_response.dart';
 import 'typedefs.dart';
 
 class ApiProviderImp implements ApiProvider {
@@ -13,17 +13,14 @@ class ApiProviderImp implements ApiProvider {
   String get baseUrl => _dioClient.options.baseUrl;
 
   @override
-  Future<BaseResponse<T>> get<T>(
-      {required String path,
-      JSON? queryParameters,
-      Options? options,
-      required T Function(Object data) dataConverter}) {
+  Future<BaseResponse<T>> get<T>({
+    required String path,
+    JSON? queryParameters,
+    Options? options,
+    required T Function(Object data) dataConverter,
+  }) {
     return _dioClient
-        .get(
-          path,
-          queryParameters: queryParameters,
-          options: options,
-        )
+        .get(path, queryParameters: queryParameters, options: options)
         .then(
           (response) => BaseResponse.fromJson(
             response.data,

@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:yapi_model/data/api_provider_imp.dart';
-import 'package:yapi_model/data/base_response.dart';
-import 'package:yapi_model/data/dio_provider.dart';
-import 'package:yapi_model/data/typedefs.dart';
+import 'package:yapi_model/common/network/dio_provider.dart';
+import 'package:yapi_model/common/network/typedefs.dart';
+
+import 'api_provider_imp.dart';
+import 'base_response.dart';
 
 part 'api_provider.g.dart';
 
@@ -17,10 +18,6 @@ abstract class ApiProvider {
     required T Function(Object data) dataConverter,
   });
 }
-
-// const _baseUrl = String.fromEnvironment("baseUrl");
-//
-// const _token = String.fromEnvironment("token");
 
 @riverpod
 ApiProvider apiProvider(

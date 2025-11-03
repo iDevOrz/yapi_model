@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yapi_model/domain/group.dart';
+import 'package:yapi_model/data/model/group.dart';
 import 'package:yapi_model/presentation/project/group_list_controller.dart';
 import 'package:yapi_model/routers/go_routers.dart';
 
@@ -20,7 +20,8 @@ class GroupListItemView extends StatelessWidget {
           initiallyExpanded: initiallyExpanded,
           children: data.list
               .map(
-                  (interface) => _buildInterface(context, interface: interface))
+                (interface) => _buildInterface(context, interface: interface),
+              )
               .toList(),
         );
       },
@@ -39,10 +40,7 @@ class GroupListItemView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(interface.title),
-            Text(interface.path),
-          ],
+          children: [Text(interface.title), Text(interface.path)],
         ),
       ),
     );

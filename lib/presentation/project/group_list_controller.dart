@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:yapi_model/data/model/group.dart';
 import 'package:yapi_model/data/yapi_repository.dart';
-import 'package:yapi_model/domain/group.dart';
 
 part 'group_list_controller.g.dart';
 

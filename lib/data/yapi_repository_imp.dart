@@ -1,17 +1,17 @@
-import 'package:yapi_model/domain/group.dart';
-import 'package:yapi_model/domain/interface_info.dart';
-import 'package:yapi_model/domain/project_info.dart';
+import 'package:yapi_model/common/network/api_provider.dart';
+import 'package:yapi_model/common/network/base_response.dart';
+import 'package:yapi_model/common/network/typedefs.dart';
+import 'package:yapi_model/data/model/group.dart';
+import 'package:yapi_model/data/model/interface_info.dart';
+import 'package:yapi_model/data/model/project_info.dart';
 
-import 'api_provider.dart';
-import 'base_response.dart';
-import 'typedefs.dart';
 import 'yapi_repository.dart';
 
 class YapiRepositoryImp implements YapiRepository {
   final ApiProvider _apiProvider;
 
   YapiRepositoryImp({required ApiProvider apiProvider})
-      : _apiProvider = apiProvider;
+    : _apiProvider = apiProvider;
 
   @override
   String get baseUrl => _apiProvider.baseUrl;

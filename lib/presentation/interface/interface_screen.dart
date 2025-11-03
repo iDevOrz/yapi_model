@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yapi_model/common/widgets/async_value_widget.dart';
@@ -14,15 +15,19 @@ class InterfaceScreen extends StatelessWidget {
 
   final int id;
 
+  InterfaceControllerProvider get provider =>
+      interfaceControllerProvider(id: id);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("接口信息"),
+        actions: [_buildRefreshIconButton(context)],
       ),
       body: Consumer(
         builder: (context, ref, child) {
-          final asyncInfo = ref.watch(interfaceControllerProvider(id: id));
+          final asyncInfo = ref.watch(provider);
           return AsyncValueWidget(
             value: asyncInfo,
             data: (info) => InterfaceSplitView(
@@ -37,5 +42,25 @@ class InterfaceScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget _buildRefreshIconButton(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, loadingWidget) {
+        final asyncInfo = ref.watch(provider);
+        if (asyncInfo.isLoading) {
+          return loadingWidget!;
+        }
+        return IconButton(
+          onPressed: () => _onRefreshTap(context, ref),
+          icon: Icon(Icons.refresh),
+        );
+      },
+      child: CupertinoActivityIndicator(),
+    );
+  }
+
+  void _onRefreshTap(BuildContext context, WidgetRef ref) {
+    ref.invalidate(provider);
   }
 }
